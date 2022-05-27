@@ -196,8 +196,9 @@ public:
 		if(mRows!=mCols || mRows!=2){
 			// 403 forbidden [ you can't do that if not a sqaure matrix and sadly not if
 			// the matrix is not 2 x 2 ]
-			this->set_error(403);
-			return Matrix(0,0);
+			Matrix a = Matrix(0,0);
+			a.set_error(403);
+			return a;
 		}
 		Matrix a = Matrix(this->mRows,this->mCols);
 		a.set(0,0,(*this)(1,1));
@@ -212,15 +213,17 @@ public:
 		if(mRows!=mCols || mRows!=2){
 			// 403 forbidden [ you can't do that if not a sqaure matrix and sadly not if
 			// the matrix is not 2 x 2 ]
-			this->set_error(403);
-			return Matrix(0,0);
+			Matrix a = Matrix(0,0);
+			a.set_error(403);
+			return a;
 		}
 		Matrix adj = this->adjacent();
 		double d = this->determinant();
 		if(d==0){
 			// 403 forbidden can't do that!
-			this->set_error(403);
-			return Matrix(0,0);
+			Matrix a = Matrix(0,0);
+			a.set_error(403);
+			return a;
 		}
 		Matrix res = adj/d;
 		return res;
@@ -244,8 +247,9 @@ public:
 		Matrix a = Matrix(m.row(),m.col());
 		if(this->mRows!=m.row()||this->mCols!=m.col()){
 			// 403 forbidden
+			Matrix a = Matrix(0,0);
 			a.set_error(403);
-			return Matrix(0,0);
+			return a;
 		}
 		for (size_t i = 0; i < mRows; ++i)
 		{
@@ -399,6 +403,18 @@ public:
 				a.set(i,j,(*this)(i,j)/val);
 			}
 		}
+		return a;
+	}
+
+	// division with matrix [ Currently only for 2x2 matrices! ]
+	Matrix operator/(Matrix m){
+		if(this->mRows!=m.row()||this->mCols!=m.col()||this->mRows!=2){
+			Matrix a = Matrix(0,0);
+			// 403 forbidden!
+			a.set_error(403);
+			return a;
+		}
+		Matrix a = m.inverse()*(*this);
 		return a;
 	}
 

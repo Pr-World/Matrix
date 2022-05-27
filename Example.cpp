@@ -4,7 +4,9 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	Matrix a = Matrix({{1,2},{3,4}});
+	Matrix a = Matrix({{21,26},{37,46}});
+	a *= 5;
+	a.print();
 }
 /*
 {{21,26},{37,46}}/{{2,3},{4,5}} = {{3,4},{5,6}}
